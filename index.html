@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ColSeed</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <header class="bg-success text-white text-center py-4">
+        <h1>COLSEED</h1>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Inicio</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="#analizar">Analizar Suelo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#monitoreo">Monitoreo de Cultivo</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mt-4">
+        <div id="widget-clima"></div>
+        <section id="consejos" class="mb-5">
+            <h2>Consejos para un cultivo eficiente y exitoso</h2>
+            <p>Estos consejos prácticos pueden ayudarte a mejorar tus cultivos y cuidar mejor de tus plantas:</p>
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="jpg1.jpg" class="img-fluid">
+                    <h4>Riego adecuado</h4>
+                    <p>Recuerda regar tus plantas en las horas de la mañana o la tarde para evitar que el sol queme las hojas.</p>
+                </div>
+                <div class="col-md-4">
+                    <img src="jpg2.jpg" class="img-fluid">
+                    <h4>Suelo bien cuidado</h4>
+                    <p>Haz pruebas periódicas de tu suelo para saber si necesita nutrientes adicionales. ¡La salud del suelo es clave!</p>
+                </div>
+                <div class="col-md-4">
+                    <img src="jpg3.jpg" class="img-fluid">
+                    <h4>Protección contra plagas</h4>
+                    <p>Usa métodos naturales para controlar las plagas, como las trampas o los insectos beneficiosos.</p>
+                </div>
+                <div class="col-md-4">
+                    <img src="jpg4.jpg" class="img-fluid">
+                    <h4>Silvopastoreo</h4>
+                    <p>Integración de árboles y arbustos con la producción ganadera para mejorar la biodiversidad y la fertilidad del suelo.</p>
+                </div>
+                <div class="col-md-4">
+                    <img src="jpg5.jpg" class="img-fluid">
+                    <h4>Rotación de cultivos</h4>
+                    <p>Planta diferentes cultivos en la misma área en distintas temporadas para mejorar la calidad del suelo.</p>
+                </div>
+                <div class="col-md-4">
+                    <img src="jpg6.jpg" class="img-fluid">
+                    <h4>Asociación de cultivos</h4>
+                    <p>Siembra cultivos complementarios juntos para maximizar la productividad y controlar plagas de manera natural.</p>
+                </div>
+            </div>
+        </section>
+        <div id="clima-widget">
+      <h2>Clima en:</h2>
+      <input id="ubicacion" type="text" placeholder="Ingrese una ciudad">
+      <select id="pais">
+        <option value="CO">Colombia</option>
+        <option value="PE">Perú</option>
+        <option value="EC">Ecuador</option>
+        <!-- Agrega más opciones para otros países -->
+      </select>
+      <button id="buscar-clima">Buscar clima</button>
+      <div id="clima-actual"></div>
+    </div>
+        <section id="analizar" class="mb-5">
+            <h2>Analizar Condiciones del Suelo</h2>
+            <div class="form-group">
+                <label for="cultivo">Selecciona un Cultivo:</label>
+                <select id="cultivo" class="form-control">
+                    <option value="mora">Mora</option>
+                    <option value="lulo">Lulo</option>
+                    <option value="frijol">Frijol</option>
+                    <option value="cafe">Café</option>
+                    <option value="maiz">Maíz</option>
+                    <option value="arveja">Arveja</option>
+                    <option value="yuca">Yuca</option>
+                    <option value="auyama">Auyama</option>
+                    <option value="papa">Papa</option>
+                    <option value="cebolla_larga">Cebolla Larga</option>
+                    <option value="tomate">Tomate</option>
+                    <option value="naranjas">Naranjas</option>
+                </select>
+            </div>
+            <button class="btn btn-success" onclick="analizarCultivo()">Analizar</button>
+            <div id="resultados" class="mt-4"></div>
+            <canvas id="graficoCondiciones" width="400" height="200"></canvas>
+        </section>
+
+        <section id="monitoreo" class="mb-5">
+            <h2>Monitoreo del Cultivo</h2>
+            <button class="btn btn-info" onclick="monitorearCultivo()">Monitorear</button>
+            <div id="monitoreoResultados" class="mt-4"></div>
+        </section>
+    </div>
+
+    <script>
+        function monitorearCultivo() {
+            document.getElementById("monitoreoResultados").innerHTML = `
+                <h4>Monitoreo del Cultivo</h4>
+                <p>Para monitorear tu cultivo de manera efectiva, revisa los siguientes factores:</p>
+                <ul>
+                    <li>Humedad del suelo</li>
+                    <li>Posibles signos de plagas o enfermedades</li>
+                    <li>Estado de crecimiento de la planta</li>
+                    <li>Condiciones climáticas en los próximos días</li>
+                </ul>
+                <p>Recuerda usar sensores y registros para mejorar la precisión del monitoreo.</p>
+            `;
+        }
+    </script>
+
+    <script src="clima.js"></script>
+</body>
+
+</html>
