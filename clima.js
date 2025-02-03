@@ -11,26 +11,35 @@ buscarClimaButton.addEventListener('click', buscarClima);
 function buscarClima() {
     const ubicacion = ubicacionInput.value.trim();
     if (!ubicacion) {
-        climaActualDiv.innerHTML = '<p style="color:red;">Por favor, ingresa una ciudad válida.</p>';
+        climaActualDiv.innerHTML = '<p class="error-msg">Por favor, ingresa una ciudad válida.</p>';
         return;
     }
 
-    // Mostrar mensaje de carga mientras se realiza la solicitud
-    climaActualDiv.innerHTML = '<p>Cargando...</p>';
+    climaActualDiv.innerHTML = '<p class="loading">Cargando...</p>';
 
     const pais = paisSelect.value;
-    const url = `${apiEndpoint}weather?q=${ubicacion},${pais}&units=metric&appid=${apiKey}`;
+    const url = `${apiEndpoint}weather?q=${ubicacion},${pais}&units=metric&appid=${apiKey}&lang=es`;
 
     fetch(url)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error HTTP: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => mostrarClimaActual(data))
         .catch(error => {
-            climaActualDiv.innerHTML = '<p style="color:red;">No se pudo obtener la información del clima. Verifica la ciudad o el país.</p>';
+            climaActualDiv.innerHTML = '<p class="error-msg">No se pudo obtener la información del clima.</p>';
             console.error(error);
         });
 }
 
 function mostrarClimaActual(data) {
+    if (data.cod !== 200) {
+        climaActualDiv.innerHTML = `<p class="error-msg">Error: ${data.message}</p>`;
+        return;
+    }
+
     const temperatura = data.main.temp;
     const humedad = data.main.humidity;
     const condiciones = data.weather[0].description;
@@ -38,9 +47,12 @@ function mostrarClimaActual(data) {
     const iconUrl = `http://openweathermap.org/img/w/${icono}.png`;
 
     climaActualDiv.innerHTML = `
-        <p>Temperatura: ${temperatura}°C</p>
-        <p>Humedad: ${humedad}%</p>
-        <p>Condiciones: ${condiciones}</p>
-        <img src="${iconUrl}" alt="${condiciones}">
+        <div class="weather-card">
+            <h3>${data.name}, ${data.sys.country}</h3>
+            <img src="${iconUrl}" alt="${condiciones}">
+            <p class="temp">${temperatura}°C</p>
+            <p>Humedad: ${humedad}%</p>
+            <p class="desc">${condiciones.charAt(0).toUpperCase() + condiciones.slice(1)}</p>
+        </div>
     `;
 }
